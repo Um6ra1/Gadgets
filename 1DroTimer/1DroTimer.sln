@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2043
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1DroTimer", "1DroTimer\1DroTimer.vcxproj", "{61837D03-F437-4BDE-86E7-2444717CFCFC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{61837D03-F437-4BDE-86E7-2444717CFCFC}.Debug|x64.ActiveCfg = Debug|x64
+		{61837D03-F437-4BDE-86E7-2444717CFCFC}.Debug|x64.Build.0 = Debug|x64
+		{61837D03-F437-4BDE-86E7-2444717CFCFC}.Debug|x86.ActiveCfg = Debug|Win32
+		{61837D03-F437-4BDE-86E7-2444717CFCFC}.Debug|x86.Build.0 = Debug|Win32
+		{61837D03-F437-4BDE-86E7-2444717CFCFC}.Release|x64.ActiveCfg = Release|x64
+		{61837D03-F437-4BDE-86E7-2444717CFCFC}.Release|x64.Build.0 = Release|x64
+		{61837D03-F437-4BDE-86E7-2444717CFCFC}.Release|x86.ActiveCfg = Release|Win32
+		{61837D03-F437-4BDE-86E7-2444717CFCFC}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {34138891-BAC6-4D2B-928C-F35EBC082ABB}
+	EndGlobalSection
+EndGlobal
