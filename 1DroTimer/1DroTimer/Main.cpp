@@ -1,8 +1,10 @@
-#define WIN32_LEAN_AND_MEAN
+﻿#define WIN32_LEAN_AND_MEAN
 #define _CRT_SECURE_NO_WARNINGS 1
 #include <windows.h>
 #include <limits.h>
 #include <shobjidl.h>
+#include <mmsystem.h>
+#pragma comment(lib,"winmm")
 
 #define WINDOW_WIDTH 250
 #define WINDOW_HEIGHT 250
@@ -74,7 +76,8 @@ static struct Timer {
 				//Beep(440, 1000);
 				tbp.Notify(hWnd);
 			//	if (notify) {
-					MessageBoxW(hWnd, TEXT(L"Time up!"), appName, MB_OK );
+				PlaySound("C:¥¥WINDOWS¥¥media¥¥Windows Battery Critical.wav", NULL, SND_FILENAME | SND_SYNC | SND_NODEFAULT);
+				MessageBoxW(hWnd, TEXT(L"Time up!"), appName, MB_OK );
 			//		notify = false;
 			//	}
 					tbp.Reset(hWnd);
@@ -93,6 +96,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
 	case WM_TIMER:
 		timer.Tick(hWnd);
 		break;
+	case WM_SIZE:
+		break;
 	}
 
 	if (nk_gdi_handle_event(hWnd, msg, wp, lp)) return 0;
@@ -109,9 +114,9 @@ int WinMain(HINSTANCE hInst, HINSTANCE, LPSTR psCmdLine, int nCmdShow) {
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wc.lpszClassName = L"1DRO_TIMER";
 	RegisterClassW(&wc);
-
+	WS_OVERLAPPEDWINDOW;
 	HWND hWnd = CreateWindowExW(WS_EX_APPWINDOW, wc.lpszClassName, appName,
-		WS_OVERLAPPEDWINDOW | WS_VISIBLE, CW_USEDEFAULT, CW_USEDEFAULT,
+		WS_OVERLAPPED | WS_SYSMENU | WS_MINIMIZEBOX | WS_VISIBLE, CW_USEDEFAULT, CW_USEDEFAULT,
 		WINDOW_WIDTH, WINDOW_HEIGHT,
 		NULL, NULL, wc.hInstance, NULL);
 
@@ -180,7 +185,7 @@ int WinMain(HINSTANCE hInst, HINSTANCE, LPSTR psCmdLine, int nCmdShow) {
 				nk_layout_row(ctx, NK_STATIC, 60, 2, r2);
 				if(timer.state == Timer::COUNTING)
 					if (nk_button_label(ctx, "Pause")) timer.state = Timer::PAUSE;
-				else if (timer.state == Timer::PAUSE)
+				if (timer.state == Timer::PAUSE)
 					if (nk_button_label(ctx, "Continue")) timer.state = Timer::COUNTING;
 				if (nk_button_label(ctx, "Stop")) {
 					timer.state = Timer::STOP;
