@@ -49,6 +49,7 @@ public:
 	}
 } tbp;
 
+#define ALARM_FREQ 440*4
 static struct Timer {
 	enum {
 		STOP, COUNTING, PAUSE,
@@ -57,7 +58,7 @@ static struct Timer {
 	int state;
 	int h, m, s;
 	int initTime, restTime;
-	bool notify;
+
 	void Start(HWND hWnd) {
 		KillTimer(hWnd, id);
 		SetTimer(hWnd, id, 1000, 0);
@@ -65,7 +66,6 @@ static struct Timer {
 		initTime = restTime = 3600 * h + 60 * m + s;
 		if (initTime == 0) {
 			initTime = restTime = 3600; // A hour count will run if the time is set to 0.
-			//notify = true;
 		}
 	}
 	void Tick(HWND hWnd) {
@@ -73,18 +73,19 @@ static struct Timer {
 			if (--restTime < 0) {
 				state = STOP;
 				KillTimer(hWnd, id);
-				//Beep(440, 1000);
 				tbp.Notify(hWnd);
-			//	if (notify) {
-				PlaySound("C:¥¥WINDOWS¥¥media¥¥Windows Battery Critical.wav", NULL, SND_FILENAME | SND_SYNC | SND_NODEFAULT);
+				if (!PlaySound("./alarm.wav", NULL, SND_FILENAME | SND_SYNC | SND_NODEFAULT)) {
+					Beep(ALARM_FREQ, 100);
+					Beep(ALARM_FREQ, 100);
+					Beep(ALARM_FREQ, 100);
+					Beep(ALARM_FREQ, 100);
+				}
 				MessageBoxW(hWnd, TEXT(L"Time up!"), appName, MB_OK );
-			//		notify = false;
-			//	}
-					tbp.Reset(hWnd);
+				tbp.Reset(hWnd);
 			}
 		}
 	}
-	Timer(int id_) : id(id_), notify(0) {}
+	Timer(int id_) : id(id_) {}
 } timer(196884);
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
